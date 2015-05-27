@@ -16,7 +16,7 @@
 		<input type='submit' value='Zoeken'>
 	</form>
 	<c:if test='${not empty param and empty fouten and empty artikel}'>
-Docent niet gevonden
+Artikel niet gevonden
 </c:if>
 	<c:if test='${not empty artikel}'>
 ${artikel.naam}<br/>
