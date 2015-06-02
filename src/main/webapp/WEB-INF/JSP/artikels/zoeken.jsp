@@ -10,18 +10,18 @@
 <body>
 	<v:menu />
 	<h1>Artikel zoeken</h1>
-	<form>
-		<label>Nummer:<span>${fouten.id}</span> <input name='id'
-			value='${param.id}' required autofocus type='number' min='1'></label>
-		<input type='submit' value='Zoeken'>
-	</form>
+	<form><label>Nummer:<span>${fouten.id}</span> <input
+			name='id' value='${param.id}' required autofocus type='number'
+			min='1'></label> <input type='submit' value='Zoeken'></form>
 	<c:if test='${not empty param and empty fouten and empty artikel}'>
 Artikel niet gevonden
 </c:if>
 	<c:if test='${not empty artikel}'>
-${artikel.naam}<br/>
-aankoopprijs: &euro; <fmt:formatNumber value='${artikel.aankoopprijs}' /><br/>
-verkoopprijs: &euro; <fmt:formatNumber value='${artikel.verkoopprijs}' /><br/>
+${artikel.naam}<br />
+aankoopprijs: &euro; <fmt:formatNumber value='${artikel.aankoopprijs}' />
+		<br />
+verkoopprijs: &euro; <fmt:formatNumber value='${artikel.verkoopprijs}' />
+		<br />
 winst: ${artikel.winstPercent}
 	</c:if>
 </body>
