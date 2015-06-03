@@ -18,12 +18,20 @@ public class ArtikelDAO extends AbstractDAO {
 			int aantalRijen) {
 		return getEntityManager()
 				.createNamedQuery("Artikel.findByNameLike", Artikel.class)
-				.setParameter("naam", "%" + naam + "%").setFirstResult(vanafRij)
-				.setMaxResults(aantalRijen).getResultList();
+				.setParameter("naam", "%" + naam + "%")
+				.setFirstResult(vanafRij).setMaxResults(aantalRijen)
+				.getResultList();
 	}
-	
+
 	public void algemeneOpslag(BigDecimal factor) {
 		getEntityManager().createNamedQuery("Artikel.algemenePrijsverhoging")
 				.setParameter("factor", factor).executeUpdate();
+	}
+
+	public List<Artikel> findAll(int vanafRij, int aantalRijen) {
+		return getEntityManager()
+				.createNamedQuery("Artikel.findAll", Artikel.class)
+				.setFirstResult(vanafRij).setMaxResults(aantalRijen)
+				.getResultList();
 	}
 }

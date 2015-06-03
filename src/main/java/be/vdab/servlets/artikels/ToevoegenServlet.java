@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.vdab.entities.Artikel;
+import be.vdab.entities.FoodArtikel;
+import be.vdab.entities.NonFoodArtikel;
 import be.vdab.services.ArtikelService;
 
 @WebServlet("/artikels/toevoegen.htm")
@@ -57,10 +59,19 @@ public class ToevoegenServlet extends HttpServlet {
 			fouten.put("prijzen", "Aankoopprijs MOET lager zijn dan verkoopprijs");
 		}
 		if (fouten.isEmpty()) {
-			Artikel artikel = new Artikel(naam, aankoopprijs, verkoopprijs);
-			artikelService.create(artikel);
-			response.sendRedirect(response.encodeRedirectURL(String.format(
-					REDIRECT_URL, request.getContextPath(), artikel.getId())));
+			if (request.getParameter("foodOrNonFood").equals("Food")){
+				int houdbaarheid = Integer.parseInt(request.getParameter("houdbaarheid"));
+				Artikel artikel = new FoodArtikel(naam, aankoopprijs, verkoopprijs, houdbaarheid);
+				artikelService.create(artikel);
+				response.sendRedirect(response.encodeRedirectURL(String.format(
+						REDIRECT_URL, request.getContextPath(), artikel.getId())));
+			}else {
+				int garantie = Integer.parseInt(request.getParameter("garantie"));
+				Artikel artikel = new NonFoodArtikel(naam, aankoopprijs, verkoopprijs, garantie);
+				artikelService.create(artikel);
+				response.sendRedirect(response.encodeRedirectURL(String.format(
+						REDIRECT_URL, request.getContextPath(), artikel.getId())));
+			}			
 		} else {
 			request.setAttribute("fouten", fouten);
 			request.getRequestDispatcher(VIEW).forward(request, response);

@@ -15,7 +15,11 @@
 			<input name='aankoopprijs' value='${param.aankoopprijs}' required
 			type='number' min='0' step='0.01'></label> <label>Verkoopprijs:<span>${fouten.verkoopprijs}</span>
 			<input name='verkoopprijs' value='${param.verkoopprijs}' required
-			type='number' min='0' step='0.01'></label>
+			type='number' min='0' step='0.01'></label> <input type="radio"
+			id="food" name="foodOrNonFood" value="Food" checked>Food <br>
+		Houdbaarheid: <input name='houdbaarheid' id='houdbaarheid'> <input
+			id="nonfood" type="radio" name="foodOrNonFood" value="NonFood">Non-Food
+		Garantie: <input name='garantie' id='garantie'>
 		<c:if test='${not empty fouten.prijzen}'>
 		${fouten.prijzen}
 	</c:if>
@@ -25,6 +29,15 @@
 		document.getElementById('toevoegform').onsubmit = function() {
 			document.getElementById('toevoegknop').disabled = true;
 		};
+		document.getElementById('food').onclick = enableDisableInputs;
+		document.getElementById('nonfood').onclick = enableDisableInputs;
+		enableDisableInputs();
+		function enableDisableInputs() {
+			document.getElementById('houdbaarheid').disabled = !document
+					.getElementById('food').checked;
+			document.getElementById('garantie').disabled = !document
+					.getElementById('nonfood').checked;
+		}
 	</script>
 </body>
 </html>

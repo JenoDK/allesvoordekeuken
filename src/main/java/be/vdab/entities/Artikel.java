@@ -3,15 +3,29 @@ package be.vdab.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import be.vdab.valueobjects.Korting;
+
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels")
-public class Artikel implements Serializable {
+@DiscriminatorColumn(name = "soort")
+public abstract class Artikel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
@@ -19,11 +33,16 @@ public class Artikel implements Serializable {
 	private String naam;
 	private BigDecimal aankoopprijs;
 	private BigDecimal verkoopprijs;
+	@ElementCollection
+	@CollectionTable(name = "kortingen", joinColumns = @JoinColumn(name = "artikelid"))
+	@OrderBy("vanafAantal")
+	private Set<Korting> kortingen;
 
 	public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
 		setNaam(naam);
 		setAankoopprijs(aankoopprijs);
 		setVerkoopprijs(verkoopprijs);
+		kortingen = new LinkedHashSet<>();
 	}
 
 	protected Artikel() {
@@ -42,9 +61,10 @@ public class Artikel implements Serializable {
 		return verkoopprijs != null
 				&& verkoopprijs.compareTo(BigDecimal.ZERO) >= 0;
 	}
-	
-	public static boolean isPrijzenValid(BigDecimal aankoopprijs, BigDecimal verkoopprijs){
-		return aankoopprijs.compareTo(verkoopprijs)<=0;
+
+	public static boolean isPrijzenValid(BigDecimal aankoopprijs,
+			BigDecimal verkoopprijs) {
+		return aankoopprijs.compareTo(verkoopprijs) <= 0;
 	}
 
 	public void setNaam(String naam) {
@@ -82,6 +102,10 @@ public class Artikel implements Serializable {
 
 	public BigDecimal getVerkoopprijs() {
 		return verkoopprijs;
+	}
+
+	public Set<Korting> getKortingen() {
+		return Collections.unmodifiableSet(kortingen);
 	}
 
 	public String getWinstPercent() {

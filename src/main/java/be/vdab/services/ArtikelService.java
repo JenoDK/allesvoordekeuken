@@ -31,4 +31,8 @@ public class ArtikelService {
 		artikelDAO.algemeneOpslag(factor);
 		artikelDAO.commit();
 	}
+
+	public List<Artikel> findAll(int vanafRij, int aantalRijen) {
+		return artikelDAO.findAll(vanafRij, aantalRijen);
+	}
 }
