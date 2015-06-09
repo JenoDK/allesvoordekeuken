@@ -34,4 +34,14 @@ public class ArtikelDAO extends AbstractDAO {
 				.setFirstResult(vanafRij).setMaxResults(aantalRijen)
 				.getResultList();
 	}
+
+	public List<Artikel> findAll() {
+		return getEntityManager()
+				.createNamedQuery("Artikel.findAll", Artikel.class)
+				.setHint(
+						"javax.persistence.loadgraph",
+						getEntityManager().createEntityGraph(
+								"Artikel.metArtikelgroep")).getResultList();
+	}
+
 }

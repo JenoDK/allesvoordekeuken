@@ -13,6 +13,7 @@
 		<li><a href="<c:url value='/artikels/kortingen.htm'/>">Artikelkortingen</a></li>
 		<li><a href="<c:url value='/artikels/perartikelgroep.htm'/>">Artikels
 				per artikelgroep</a></li>
+		<li><a href="<c:url value='/artikels/artikellijst.htm'/>">Artikellijst</a></li>
 
 
 	</ul>

@@ -35,4 +35,8 @@ public class ArtikelService {
 	public List<Artikel> findAll(int vanafRij, int aantalRijen) {
 		return artikelDAO.findAll(vanafRij, aantalRijen);
 	}
+
+	public List<Artikel> findAll() {
+		return artikelDAO.findAll();
+	}
 }

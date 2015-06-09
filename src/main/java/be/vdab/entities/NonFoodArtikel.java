@@ -7,15 +7,25 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("NF")
-public class NonFoodArtikel extends Artikel{
+public class NonFoodArtikel extends Artikel {
 	private static final long serialVersionUID = 1L;
 	private int garantie;
+
 	public NonFoodArtikel(String naam, BigDecimal aankoopprijs,
-			BigDecimal verkoopprijs, int garantie) {
-		super(naam, aankoopprijs, verkoopprijs);
-		this.garantie = garantie;
+			BigDecimal verkoopprijs, int garantie, Artikelgroep artikelgroep) {
+		super(naam, aankoopprijs, verkoopprijs, artikelgroep);
+		setGarantie(garantie);
 	}
-	
+
 	public NonFoodArtikel() {
 	}
+
+	public int getGarantie() {
+		return garantie;
+	}
+
+	public void setGarantie(int garantie) {
+		this.garantie = garantie;
+	}
+
 }
